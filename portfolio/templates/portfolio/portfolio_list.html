@@ -6,14 +6,57 @@
 <h1 class="text-center mb-4">Portfolio Entries</h1>
 <div class="row">
     {% for entry in entries %}
-    <div class="col-md-4">
+    <div class="col-md-4 d-flex align-items-stretch">
         <div class="card mb-4">
             <img src="{{ entry.photo.url }}" class="card-img-top" alt="{{ entry.title }}">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ entry.title }}</h5>
                 <p class="card-text">{{ entry.description }}</p>
                 <p class="card-text"><small class="text-muted">{{ entry.date }}</small></p>
-                <a href="{{ entry.google_map_url }}" target="_blank" class="btn btn-warning">View Location</a>
+                <p><strong>Location:</strong> {{ entry.location }}</p>
+
+                <!-- Buttons -->
+                <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#mapModal{{ forloop.counter }}">
+                    View on Map
+                </button>
+                <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#imageModal{{ forloop.counter }}">
+                    View Fullscreen Image
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Modal -->
+    <div class="modal fade" id="mapModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="mapModalLabel{{ forloop.counter }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapModalLabel{{ forloop.counter }}">{{ entry.title }} - Location</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="map-responsive">
+                        {{ entry.google_map_embed|safe }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="imageModalLabel{{ forloop.counter }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel{{ forloop.counter }}">{{ entry.title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="{{ entry.photo.url }}" alt="{{ entry.title }}" class="img-fluid">
+                </div>
             </div>
         </div>
     </div>

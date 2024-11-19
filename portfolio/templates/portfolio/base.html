@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Slate Theme CSS (Bootswatch) -->
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/slate/bootstrap.min.css" rel="stylesheet">
-    <title>{% block title %}USportfolio{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>{% block title %}US Exchange Portfolio{% endblock %}</title>
 </head>
 <body>
     <!-- Navbar -->
@@ -38,7 +40,7 @@
     <!-- Footer -->
     <footer class="footer mt-auto py-3 bg-dark text-white text-center">
         <div class="container">
-            <p>USportfolio &copy; 2024</p>
+            <p>US Exchange Portfolio 2024</p>
         </div>
     </footer>
 
