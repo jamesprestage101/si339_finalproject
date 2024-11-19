@@ -1,0 +1,22 @@
+{% extends 'portfolio/base.html' %}
+
+{% block title %}Entries{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-4">Portfolio Entries</h1>
+<div class="row">
+    {% for entry in entries %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <img src="{{ entry.photo.url }}" class="card-img-top" alt="{{ entry.title }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ entry.title }}</h5>
+                <p class="card-text">{{ entry.description }}</p>
+                <p class="card-text"><small class="text-muted">{{ entry.date }}</small></p>
+                <a href="{{ entry.google_map_url }}" target="_blank" class="btn btn-warning">View Location</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
