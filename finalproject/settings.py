@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portfolio',
+    'django_google_maps',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'finalproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'portfolio.context_processors.google_maps_api_key',
             ],
         },
     },
@@ -129,3 +131,5 @@ MEDIA_ROOT = '/home/jamesprestage/finalproject/media'
 MEDIA_URL = '/media/'
 STATIC_ROOT = '/home/jamesprestage/finalproject/static'
 STATIC_URL = '/static/'
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyB0zlHIqG75VDFd74-qEtiU5duOO4J73HA'

@@ -20,7 +20,11 @@
                 <h5 class="card-title">{{ entry.title }}</h5>
                 <p class="card-text">{{ entry.description }}</p>
                 <p class="card-text"><small class="text-muted">{{ entry.date }}</small></p>
-                <p><strong>Location:</strong> {{ entry.location }}</p>
+                <p><strong>Location:</strong> {{ entry.address }}</p>
+
+                <!-- Debug output -->
+                <p class="d-none">Debug: Lat: {{ entry.geolocation|default_if_none:'0,0'|slice:':0' }},
+                    Lng: {{ entry.geolocation|default_if_none:'0,0'|slice:'2:' }}</p>
 
                 <!-- Buttons -->
                 <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#mapModal{{ forloop.counter }}">
@@ -33,7 +37,7 @@
         </div>
     </div>
 
-    <!-- Map Modal (Smaller) -->
+    <!-- Map Modal -->
     <div class="modal fade map-modal" id="mapModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="mapModalLabel{{ forloop.counter }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -42,8 +46,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="map-responsive">
-                        {{ entry.google_map_embed|safe }}
+                    <div
+                        id="map{{ forloop.counter }}"
+                        class="map-container"
+                        data-lat="{{ entry.geolocation|default_if_none:'0'|slice:':0' }}"
+                        data-lng="{{ entry.geolocation|default_if_none:'0'|slice:'2:' }}"
+                        data-title="{{ entry.title }}"
+                        style="width: 100%; height: 400px;">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -53,7 +62,7 @@
         </div>
     </div>
 
-    <!-- Media Modal (Larger for Images/Videos) -->
+    <!-- Media Modal -->
     <div class="modal fade media-modal" id="mediaModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="mediaModalLabel{{ forloop.counter }}" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -76,4 +85,53 @@
     </div>
     {% endfor %}
 </div>
-{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    window.initializeMap = function(mapElement) {
+        if (!mapElement) return;
+
+        const lat = parseFloat(mapElement.dataset.lat) || 0;
+        const lng = parseFloat(mapElement.dataset.lng) || 0;
+        const title = mapElement.dataset.title;
+
+        const map = new google.maps.Map(mapElement, {
+            center: { lat, lng },
+            zoom: 12,
+            mapTypeId: 'roadmap',
+        });
+
+        new google.maps.Marker({
+            map: map,
+            position: { lat, lng },
+            title: title,
+        });
+
+        google.maps.event.trigger(map, 'resize');
+    };
+
+    async function initMaps() {
+        const mapContainers = document.querySelectorAll('.map-container');
+
+        mapContainers.forEach((container) => {
+            const modalId = container.closest('.modal').id;
+            const modal = document.getElementById(modalId);
+
+            modal.addEventListener('shown.bs.modal', function() {
+                window.initializeMap(container);
+            });
+        });
+    }
+
+    if (typeof google === 'undefined') {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMaps`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    } else {
+        initMaps();
+    }
+</script>
+{% endblock extra_scripts %}
+{% endblock content %}
