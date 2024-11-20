@@ -7,19 +7,20 @@ class PortfolioEntryAdmin(admin.ModelAdmin):
     formfield_overrides = {
         map_fields.AddressField: {
             'widget': map_widgets.GoogleMapsAddressWidget(attrs={
-                'data-map-type': 'roadmap',  # Default map type to roadmap
-                'data-autocomplete-options': '{"types": ["geocode"]}'  # Restrict autocomplete to geocoding
+                'data-map-type': 'roadmap',
+                'data-autocomplete-options': '{"types": ["geocode"]}',
+                'size': '40'
             })
         },
         map_fields.GeoLocationField: {
-            'widget': map_widgets.GoogleMapsAddressWidget(attrs={
-                'data-map-type': 'roadmap'  # Match the map type for consistency
+            'widget': admin.widgets.AdminTextInputWidget(attrs={
+                'size': '40'
             })
         },
     }
 
     list_display = ('title', 'date', 'address', 'geolocation')
-    search_fields = ('title', 'description', 'address', 'geolocation')
+    search_fields = ('title', 'description', 'address')
 
     fieldsets = (
         (None, {
@@ -27,8 +28,12 @@ class PortfolioEntryAdmin(admin.ModelAdmin):
         }),
         ('Location', {
             'fields': ('address', 'geolocation'),
-            'description': 'Enter the address, and the geolocation will be automatically populated, or adjust it manually.'
+            'description': 'Enter the address and coordinates. Format: latitude,longitude (e.g., 63.984851,-22.625563)'
         }),
     )
+
+    def save_model(self, request, obj, form, change):
+        obj.full_clean()  # This will trigger the validation
+        super().save_model(request, obj, form, change)
 
 admin.site.register(PortfolioEntry, PortfolioEntryAdmin)

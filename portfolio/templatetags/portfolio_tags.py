@@ -10,7 +10,7 @@ def get_lat(geopt):
     """
     if geopt:
         return geopt.lat
-    return 53.350140  # Default latitude
+    return 53.350140
 
 @register.filter
 def get_lng(geopt):
@@ -20,4 +20,4 @@ def get_lng(geopt):
     """
     if geopt:
         return geopt.lon
-    return -6.266155  # Default longitude
+    return -6.266155
