@@ -1,4 +1,5 @@
 {% extends 'portfolio/base.html' %}
+{% load portfolio_tags %}
 
 {% block title %}Entries{% endblock %}
 
@@ -23,8 +24,10 @@
                 <p><strong>Location:</strong> {{ entry.address }}</p>
 
                 <!-- Debug output -->
-                <p class="d-none">Debug: Lat: {{ entry.geolocation|default_if_none:'0,0'|slice:':0' }},
-                    Lng: {{ entry.geolocation|default_if_none:'0,0'|slice:'2:' }}</p>
+                <p class="d-none">
+                    Debug: Lat: {{ entry.geolocation|get_lat }}, 
+                    Lng: {{ entry.geolocation|get_lng }}
+                </p>
 
                 <!-- Buttons -->
                 <button type="button" class="btn btn-primary mt-auto" data-bs-toggle="modal" data-bs-target="#mapModal{{ forloop.counter }}">
@@ -49,8 +52,8 @@
                     <div
                         id="map{{ forloop.counter }}"
                         class="map-container"
-                        data-lat="{{ entry.geolocation|default_if_none:'0'|slice:':0' }}"
-                        data-lng="{{ entry.geolocation|default_if_none:'0'|slice:'2:' }}"
+                        data-lat="{{ entry.geolocation|get_lat }}"
+                        data-lng="{{ entry.geolocation|get_lng }}"
                         data-title="{{ entry.title }}"
                         style="width: 100%; height: 400px;">
                     </div>
@@ -85,26 +88,31 @@
     </div>
     {% endfor %}
 </div>
+{% endblock content %}
 
 {% block extra_scripts %}
 <script>
-    window.initializeMap = function(mapElement) {
+    window.initializeMap = async function(mapElement) {
         if (!mapElement) return;
 
-        const lat = parseFloat(mapElement.dataset.lat) || 0;
-        const lng = parseFloat(mapElement.dataset.lng) || 0;
-        const title = mapElement.dataset.title;
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+        const lat = parseFloat(mapElement.dataset.lat) || 53.350140;
+        const lng = parseFloat(mapElement.dataset.lng) || -6.266155;
+
+        console.log('Initializing map with coordinates:', lat, lng); // Debug line
 
         const map = new google.maps.Map(mapElement, {
             center: { lat, lng },
             zoom: 12,
             mapTypeId: 'roadmap',
+            mapId: 'c6903ae92876aef5',
         });
 
-        new google.maps.Marker({
+        new AdvancedMarkerElement({
             map: map,
             position: { lat, lng },
-            title: title,
+            title: mapElement.dataset.title,
         });
 
         google.maps.event.trigger(map, 'resize');
@@ -117,21 +125,26 @@
             const modalId = container.closest('.modal').id;
             const modal = document.getElementById(modalId);
 
-            modal.addEventListener('shown.bs.modal', function() {
-                window.initializeMap(container);
+            modal.addEventListener('shown.bs.modal', function () {
+                setTimeout(() => {
+                    window.initializeMap(container);
+                }, 300); // Delay ensures the modal is visible
             });
         });
     }
 
+    // Load Google Maps script
     if (typeof google === 'undefined') {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMaps`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
+        if (!window.mapsScriptLoaded) {
+            window.mapsScriptLoaded = true;
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&v=weekly&libraries=marker&callback=initMaps`;
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        }
     } else {
         initMaps();
     }
 </script>
 {% endblock extra_scripts %}
-{% endblock content %}
