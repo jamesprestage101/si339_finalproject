@@ -7,6 +7,12 @@
     <!-- Slate Theme CSS (Bootswatch) -->
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/slate/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    <!-- Conditional CSS for Homepage -->
+    {% if request.resolver_match.url_name == 'home' %}
+        <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    {% endif %}
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <title>{% block title %}US Exchange Portfolio{% endblock %}</title>
@@ -22,10 +28,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'portfolio_list' %}">Entries</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'portfolio_list' %}active{% endif %}" href="{% url 'portfolio_list' %}">Entries</a>
                     </li>
                 </ul>
             </div>

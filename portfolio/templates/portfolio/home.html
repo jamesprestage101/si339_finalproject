@@ -3,6 +3,54 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1 class="text-center">Welcome to my 2024 US Exchange Portfolio</h1>
-<p class="text-center">This is the home page. Content will be added later.</p>
+<div class="home-page container mt-5">
+    <h1 class="text-center mb-3">Welcome to my 2024 US Exchange Portfolio</h1>
+    <p class="text-center">Get to know me and learn about this project here.</p>
+
+    <div class="row justify-content-center g-4">
+        <!-- Left Column: Big Image -->
+        <div class="col-12 col-md-6 d-flex">
+            <div class="home-card card bg-dark text-white w-100">
+                <div class="card-body p-0 home-image-container">
+                    <img 
+                        src="/media/home.jpg" 
+                        alt="Home Image" 
+                        class="w-100 h-100 object-fit-cover"
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Profile Section -->
+        <div class="col-12 col-md-6 d-flex">
+            <div class="home-card card bg-dark text-white w-100 p-4 d-flex flex-column">
+                <div class="d-flex flex-column align-items-center">
+                    <div class="profile-picture mb-3" style="width: 100px; height: 100px;">
+                        <img 
+                            src="/media/profile.png" 
+                            alt="Profile Picture" 
+                            class="w-100 h-100 rounded-circle object-fit-cover"
+                        >
+                    </div>
+                    <!-- Scrollable Profile Text -->
+                    <div class="card-body scrollable-content flex-grow-1 text-center">
+                        <p class="mb-2 text-break">
+                            My name is 
+                            <a href="https://www.linkedin.com/in/james-prestage/" target="_blank" class="text-primary">
+                                James Prestage
+                            </a> 
+                            and welcome to my US Exchange Portfolio. From August 22nd 2024 until December 14th 2024, I attended the University
+                            of Michigan in Ann Arbor as part of my university's study abroad program.
+                        </p>
+                        <p class="mb-0 text-break">
+                            I created this website for my SI 339 Web Design, Development, and Accessibility 
+                            final project. Using the Django framework and Google Maps API, view the highlights 
+                            of my exchange and locations I visited.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
