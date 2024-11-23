@@ -25,7 +25,7 @@
 
                 <!-- Debug output -->
                 <p class="d-none">
-                    Debug: Lat: {{ entry.geolocation|get_lat }}, 
+                    Debug: Lat: {{ entry.geolocation|get_lat }},
                     Lng: {{ entry.geolocation|get_lng }}
                 </p>
 
@@ -100,7 +100,7 @@
         const lat = parseFloat(mapElement.dataset.lat) || 53.350140;
         const lng = parseFloat(mapElement.dataset.lng) || -6.266155;
 
-        console.log('Initializing map with coordinates:', lat, lng); // Debug line
+        console.log('Initializing map with coordinates:', lat, lng);
 
         const map = new google.maps.Map(mapElement, {
             center: { lat, lng },

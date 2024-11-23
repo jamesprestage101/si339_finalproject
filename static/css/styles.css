@@ -17,14 +17,14 @@
 }
 
 /* Image and Video Previews */
-.card img, 
+.card img,
 .card-video-top {
     height: 200px;
     object-fit: cover;
     width: 100%;
 }
 
-.card-img-top, 
+.card-img-top,
 .card-video-top {
     object-fit: cover;
     width: 100%;
@@ -65,7 +65,7 @@
     overflow-y: auto;
 }
 
-.modal-body img, 
+.modal-body img,
 .modal-body video {
     max-height: 85vh;
     max-width: 100%;
@@ -78,6 +78,7 @@
     margin: auto;
 }
 
+/* Forgive the use of max-width here from this point on, I am not designing mobile-first but the site adapts well to all viewports!! */
 .map-modal .modal-dialog {
     max-width: 60%; /* Smaller modal for maps */
     max-height: 70vh;
@@ -95,8 +96,26 @@
         height: 150px;
     }
 
-    .modal-body img, 
+    .modal-body img,
     .modal-body video {
         max-height: 70vh;
     }
+}
+
+/* Navbar button styles to ensure text stays white regardless of state */
+/*This is to fix contrast issues*/
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: white !important;
+}
+
+.card-body .card-text small.text-muted {
+    color: white !important; /* White text for date */
 }
