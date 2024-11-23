@@ -78,7 +78,10 @@
     margin: auto;
 }
 
-/* Forgive the use of max-width here from this point on, I am not designing mobile-first but the site adapts well to all viewports!! */
+/* Forgive the use of max-width here from this point on,
+I am not designing mobile-first + This was the best way to fix Boostrap modals
+Boostrap adapts well to all viewports!! */
+
 .map-modal .modal-dialog {
     max-width: 60%; /* Smaller modal for maps */
     max-height: 70vh;
@@ -87,19 +90,6 @@
 .media-modal .modal-dialog {
     max-width: 90%; /* Larger modal for media */
     max-height: 85vh;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .card-img-top,
-    .card-video-top {
-        height: 150px;
-    }
-
-    .modal-body img,
-    .modal-body video {
-        max-height: 70vh;
-    }
 }
 
 /* Navbar button styles to ensure text stays white regardless of state */
