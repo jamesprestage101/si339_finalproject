@@ -57,9 +57,3 @@
 .home-page .card:hover {
     transform: scale(1.02);
 }
-
-@media (max-width: 768px) {
-    .home-page .home-card {
-        margin-bottom: 20px;
-    }
-}

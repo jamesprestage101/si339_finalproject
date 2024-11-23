@@ -18,38 +18,47 @@
     <title>{% block title %}US Exchange Portfolio{% endblock %}</title>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">US Portfolio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'portfolio_list' %}active{% endif %}" href="{% url 'portfolio_list' %}">Entries</a>
-                    </li>
-                </ul>
+    <!-- Main content landmark -->
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">US Portfolio</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'portfolio_list' %}active{% endif %}" href="{% url 'portfolio_list' %}">Entries</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+    </header>
+
+    <!-- Main content area -->
+    <main>
+        <div class="container mt-4">
+            {% block content %}
+            {% endblock %}
         </div>
-    </nav>
-    <!-- Main Content -->
-    <div class="container mt-4">
-        {% block content %}
-        {% endblock %}
-    </div>
-    <!-- Footer -->
+    </main>
+
+    <!-- Footer landmark -->
     <footer class="footer mt-auto py-3 bg-dark text-white text-center">
         <div class="container">
             <p>SI 339 Final Project</p>
         </div>
     </footer>
+
     <!-- JavaScript Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
     <!-- JavaScript Script to reset button state after modal closure -->
     <script src="{% static 'js/modal_reset.js' %}"></script>
 
