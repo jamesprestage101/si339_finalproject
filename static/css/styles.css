@@ -79,7 +79,7 @@
 }
 
 /* Forgive the use of max-width here from this point on,
-I am not designing mobile-first + This was the best way to fix Boostrap modals
+I am not designing mobile-first + This was the best way to fix Boostrap modals not working properly
 Boostrap adapts well to all viewports!! */
 
 .map-modal .modal-dialog {
@@ -93,7 +93,7 @@ Boostrap adapts well to all viewports!! */
 }
 
 /* Navbar button styles to ensure text stays white regardless of state */
-/*This is to fix contrast issues*/
+/*This is to fix contrast issues, !important needed to override template*/
 .navbar-nav .nav-link {
     color: white !important;
 }
