@@ -78,11 +78,17 @@
     margin: auto;
 }
 
+/* Forgive the use of max-width here from this point on,
+I am not designing mobile-first + This was the best way to fix Boostrap modals not working properly
+Boostrap adapts well to all viewports!! */
+
 .map-modal .modal-dialog {
+    max-width: 60%; /* Smaller modal for maps */
     max-height: 70vh;
 }
 
 .media-modal .modal-dialog {
+    max-width: 90%; /* Larger modal for media */
     max-height: 85vh;
 }
 
